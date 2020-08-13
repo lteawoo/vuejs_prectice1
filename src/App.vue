@@ -49,7 +49,7 @@ export default {
           {
             title: 'home',
             icon: 'mdi-home',
-            subItems: [
+            subMenus: [
               {
                 title: 'DashBoard',
                 to: '/'
@@ -64,7 +64,7 @@ export default {
             title: 'about',
             active: true,
             icon: 'mdi-account',
-            subItems: [
+            subMenus: [
               {
                 title: 'xxx',
                 to: '/xxx'
