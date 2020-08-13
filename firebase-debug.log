@@ -1,0 +1,164 @@
+[debug] [2020-08-13T00:26:52.001Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:26:52.003Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\LTW\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only database
+[debug] [2020-08-13T00:26:52.003Z] CLI Version:   8.7.0
+[debug] [2020-08-13T00:26:52.003Z] Platform:      win32
+[debug] [2020-08-13T00:26:52.003Z] Node Version:  v12.18.2
+[debug] [2020-08-13T00:26:52.004Z] Time:          Thu Aug 13 2020 09:26:52 GMT+0900 (Korean Standard Time)
+[debug] [2020-08-13T00:26:52.004Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:26:52.004Z] 
+[debug] [2020-08-13T00:26:52.011Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-13T00:26:52.012Z] > authorizing via signed-in user
+[debug] [2020-08-13T00:26:52.012Z] [iam] checking project taeu-vue-precties1 for permissions ["firebase.projects.get","firebasedatabase.instances.update"]
+[debug] [2020-08-13T00:26:52.014Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/taeu-vue-precties1:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasedatabase.instances.update"]}
+[debug] [2020-08-13T00:26:52.820Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:26:52 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=581","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-08-13T00:26:52.822Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/taeu-vue-precties1  
+ 
+[debug] [2020-08-13T00:26:53.563Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:26:52 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[info] 
+[info] === Deploying to 'taeu-vue-precties1'...
+[info] 
+[info] i  deploying database 
+[info] i  database: checking rules syntax... 
+[debug] [2020-08-13T00:26:55.342Z] >>> HTTP REQUEST PUT https://taeu-vue-precties1.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+[debug] [2020-08-13T00:26:56.105Z] <<< HTTP RESPONSE 200 {"server":"nginx","date":"Thu, 13 Aug 2020 00:26:55 GMT","content-type":"application/json; charset=utf-8","content-length":"15","connection":"keep-alive","access-control-allow-origin":"*","cache-control":"no-cache","strict-transport-security":"max-age=31556926; includeSubDomains; preload"}
+[debug] [2020-08-13T00:29:58.878Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:29:58.880Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\LTW\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only database
+[debug] [2020-08-13T00:29:58.880Z] CLI Version:   8.7.0
+[debug] [2020-08-13T00:29:58.880Z] Platform:      win32
+[debug] [2020-08-13T00:29:58.880Z] Node Version:  v12.18.2
+[debug] [2020-08-13T00:29:58.881Z] Time:          Thu Aug 13 2020 09:29:58 GMT+0900 (Korean Standard Time)
+[debug] [2020-08-13T00:29:58.881Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:29:58.881Z] 
+[debug] [2020-08-13T00:29:58.888Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-13T00:29:58.888Z] > authorizing via signed-in user
+[debug] [2020-08-13T00:29:58.889Z] [iam] checking project taeu-vue-precties1 for permissions ["firebase.projects.get","firebasedatabase.instances.update"]
+[debug] [2020-08-13T00:29:58.891Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/taeu-vue-precties1:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasedatabase.instances.update"]}
+[debug] [2020-08-13T00:29:59.603Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:29:58 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=564","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-08-13T00:29:59.604Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/taeu-vue-precties1  
+ 
+[debug] [2020-08-13T00:30:00.306Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:29:59 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[info] 
+[info] === Deploying to 'taeu-vue-precties1'...
+[info] 
+[info] i  deploying database 
+[info] i  database: checking rules syntax... 
+[debug] [2020-08-13T00:30:02.067Z] >>> HTTP REQUEST PUT https://taeu-vue-precties1.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+[debug] [2020-08-13T00:30:02.782Z] <<< HTTP RESPONSE 200 {"server":"nginx","date":"Thu, 13 Aug 2020 00:30:02 GMT","content-type":"application/json; charset=utf-8","content-length":"15","connection":"keep-alive","access-control-allow-origin":"*","cache-control":"no-cache","strict-transport-security":"max-age=31556926; includeSubDomains; preload"}
+[debug] [2020-08-13T00:32:19.170Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:32:19.172Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\LTW\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only database
+[debug] [2020-08-13T00:32:19.172Z] CLI Version:   8.7.0
+[debug] [2020-08-13T00:32:19.172Z] Platform:      win32
+[debug] [2020-08-13T00:32:19.172Z] Node Version:  v12.18.2
+[debug] [2020-08-13T00:32:19.173Z] Time:          Thu Aug 13 2020 09:32:19 GMT+0900 (Korean Standard Time)
+[debug] [2020-08-13T00:32:19.173Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:32:19.173Z] 
+[debug] [2020-08-13T00:32:19.180Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-13T00:32:19.181Z] > authorizing via signed-in user
+[debug] [2020-08-13T00:32:19.181Z] [iam] checking project taeu-vue-precties1 for permissions ["firebase.projects.get","firebasedatabase.instances.update"]
+[debug] [2020-08-13T00:32:19.183Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/taeu-vue-precties1:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasedatabase.instances.update"]}
+[debug] [2020-08-13T00:32:20.035Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:32:19 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=629","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-08-13T00:32:20.036Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/taeu-vue-precties1  
+ 
+[debug] [2020-08-13T00:32:20.533Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:32:19 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[info] 
+[info] === Deploying to 'taeu-vue-precties1'...
+[info] 
+[info] i  deploying database 
+[info] i  database: checking rules syntax... 
+[debug] [2020-08-13T00:32:22.229Z] >>> HTTP REQUEST PUT https://taeu-vue-precties1.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+[debug] [2020-08-13T00:32:22.977Z] <<< HTTP RESPONSE 200 {"server":"nginx","date":"Thu, 13 Aug 2020 00:32:22 GMT","content-type":"application/json; charset=utf-8","content-length":"15","connection":"keep-alive","access-control-allow-origin":"*","cache-control":"no-cache","strict-transport-security":"max-age=31556926; includeSubDomains; preload"}
+[debug] [2020-08-13T00:32:38.551Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:32:38.553Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\LTW\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only database
+[debug] [2020-08-13T00:32:38.553Z] CLI Version:   8.7.0
+[debug] [2020-08-13T00:32:38.553Z] Platform:      win32
+[debug] [2020-08-13T00:32:38.553Z] Node Version:  v12.18.2
+[debug] [2020-08-13T00:32:38.554Z] Time:          Thu Aug 13 2020 09:32:38 GMT+0900 (Korean Standard Time)
+[debug] [2020-08-13T00:32:38.554Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:32:38.554Z] 
+[debug] [2020-08-13T00:32:38.561Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-13T00:32:38.562Z] > authorizing via signed-in user
+[debug] [2020-08-13T00:32:38.562Z] [iam] checking project taeu-vue-precties1 for permissions ["firebase.projects.get","firebasedatabase.instances.update"]
+[debug] [2020-08-13T00:32:38.564Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/taeu-vue-precties1:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasedatabase.instances.update"]}
+[debug] [2020-08-13T00:32:39.300Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:32:38 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=579","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-08-13T00:32:39.302Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/taeu-vue-precties1  
+ 
+[debug] [2020-08-13T00:32:40.000Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:32:39 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[info] 
+[info] === Deploying to 'taeu-vue-precties1'...
+[info] 
+[info] i  deploying database 
+[info] i  database: checking rules syntax... 
+[debug] [2020-08-13T00:32:41.737Z] >>> HTTP REQUEST PUT https://taeu-vue-precties1.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+[debug] [2020-08-13T00:32:42.320Z] <<< HTTP RESPONSE 200 {"server":"nginx","date":"Thu, 13 Aug 2020 00:32:41 GMT","content-type":"application/json; charset=utf-8","content-length":"15","connection":"keep-alive","access-control-allow-origin":"*","cache-control":"no-cache","strict-transport-security":"max-age=31556926; includeSubDomains; preload"}
+[debug] [2020-08-13T00:33:47.611Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:33:47.613Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\LTW\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only database
+[debug] [2020-08-13T00:33:47.614Z] CLI Version:   8.7.0
+[debug] [2020-08-13T00:33:47.614Z] Platform:      win32
+[debug] [2020-08-13T00:33:47.614Z] Node Version:  v12.18.2
+[debug] [2020-08-13T00:33:47.614Z] Time:          Thu Aug 13 2020 09:33:47 GMT+0900 (Korean Standard Time)
+[debug] [2020-08-13T00:33:47.615Z] ----------------------------------------------------------------------
+[debug] [2020-08-13T00:33:47.615Z] 
+[debug] [2020-08-13T00:33:47.622Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-13T00:33:47.623Z] > authorizing via signed-in user
+[debug] [2020-08-13T00:33:47.623Z] [iam] checking project taeu-vue-precties1 for permissions ["firebase.projects.get","firebasedatabase.instances.update"]
+[debug] [2020-08-13T00:33:47.625Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/taeu-vue-precties1:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasedatabase.instances.update"]}
+[debug] [2020-08-13T00:33:48.347Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:33:47 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=555","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-08-13T00:33:48.348Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/taeu-vue-precties1  
+ 
+[debug] [2020-08-13T00:33:48.770Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 13 Aug 2020 00:33:48 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[info] 
+[info] === Deploying to 'taeu-vue-precties1'...
+[info] 
+[info] i  deploying database 
+[info] i  database: checking rules syntax... 
+[debug] [2020-08-13T00:33:50.440Z] >>> HTTP REQUEST PUT https://taeu-vue-precties1.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
+[debug] [2020-08-13T00:33:51.144Z] <<< HTTP RESPONSE 200 {"server":"nginx","date":"Thu, 13 Aug 2020 00:33:50 GMT","content-type":"application/json; charset=utf-8","content-length":"15","connection":"keep-alive","access-control-allow-origin":"*","cache-control":"no-cache","strict-transport-security":"max-age=31556926; includeSubDomains; preload"}

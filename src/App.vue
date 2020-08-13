@@ -8,13 +8,13 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <site-title :title="site.title"></site-title>
       <v-spacer/>
-      <v-btn icon @click="save"><v-icon>mdi-check</v-icon></v-btn>
+      <v-btn icon @click="showSnackbar"><v-icon>mdi-check</v-icon></v-btn>
       <v-btn icon @click="read"><v-icon>mdi-numeric</v-icon></v-btn>
       <v-btn icon @click="readOne"><v-icon>mdi-account-badge-alert</v-icon></v-btn>
     </v-app-bar>
 
     <v-navigation-drawer app v-model="drawer">
-      <site-menu :items="site.menu"></site-menu>
+      <site-menu :menus="site.menu"></site-menu>
     </v-navigation-drawer>
 
     <v-content>
@@ -22,6 +22,7 @@
     </v-content>
 
     <site-footer :footer="site.footer"></site-footer>
+    <snackbar></snackbar>
   </v-app>
 </template>
 
@@ -29,19 +30,48 @@
 import SiteTitle from '@/views/site/title'
 import SiteFooter from '@/views/site/footer'
 import SiteMenu from '@/views/site/menu'
+import Snackbar from './components/Snackbar.vue'
 
 export default {
   name: 'App',
   components: {
     SiteTitle,
     SiteFooter,
-    SiteMenu
+    SiteMenu,
+    Snackbar
   },
   data () {
     return {
       drawer: false,
+      isShow: false,
       site: {
-        menu: [],
+        menu: [
+          {
+            title: 'home',
+            icon: 'mdi-home',
+            subItems: [
+              {
+                title: 'DashBoard',
+                to: '/'
+              },
+              {
+                title: 'About',
+                to: '/about'
+              }
+            ]
+          },
+          {
+            title: 'about',
+            active: true,
+            icon: 'mdi-account',
+            subItems: [
+              {
+                title: 'xxx',
+                to: '/xxx'
+              }
+            ]
+          }
+        ],
         title: '나의 타이틀입니다.',
         footer: 'footer입니다.'
       }
@@ -55,13 +85,23 @@ export default {
     subscribe () {
       this.$firebase.database().ref().child('site').on('value', (sn) => {
         const v = sn.val()
+        console.log(v)
         if (!v) {
+          console.log('set')
           this.$firebase.database().ref().child('site').set(this.site)
+          return
         }
         this.site = v
       }, (e) => {
         console.log(e.message)
       })
+    },
+
+    showSnackbar () {
+      this.$notifier.showMessage({
+        content: 'Hello, snackbar',
+        color: 'info'
+      }, this.$store)
     },
 
     save () {
