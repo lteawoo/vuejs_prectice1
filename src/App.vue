@@ -13,7 +13,7 @@
       <v-btn icon @click="readOne"><v-icon>mdi-account-badge-alert</v-icon></v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app v-model="drawer">
+    <v-navigation-drawer app v-model="drawer" width="400">
       <site-menu :menus="site.menu"></site-menu>
     </v-navigation-drawer>
 
