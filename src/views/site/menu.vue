@@ -30,6 +30,7 @@
                 <v-btn @click="openDialogMenu(i)" icon><v-icon>mdi-pencil</v-icon></v-btn>
                 <v-btn @click="moveMenu(menus, i, -1)" v-if="i > 0" icon><v-icon>mdi-chevron-double-up</v-icon></v-btn>
                 <v-btn @click="moveMenu(menus, i, 1)" v-if="i < menus.length - 1" icon><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+                <v-btn @click="removeMenu(menus, i)" icon><v-icon>mdi-delete</v-icon></v-btn>
               </span>
             </v-list-item-title>
           </v-list-item-content>
@@ -47,6 +48,7 @@
                 <v-btn @click="openDialogSubMenu(i, j)" icon><v-icon>mdi-pencil</v-icon></v-btn>
                 <v-btn @click="moveMenu(menu.subMenus, i, -1)" v-if="j > 0" icon><v-icon>mdi-chevron-double-up</v-icon></v-btn>
                 <v-btn @click="moveMenu(menu.subMenus, i, 1)" v-if="j < menu.subMenus.length - 1" icon><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+                <v-btn @click="removeMenu(menus, i)" icon><v-icon>mdi-delete</v-icon></v-btn>
               </span>
             </v-list-item-title>
           </v-list-item-content>
@@ -176,6 +178,11 @@ export default {
 
     moveMenu (menus, i, arrow) {
       menus.splice(i + arrow, 0, ...menus.splice(i, 1))
+      this.save()
+    },
+
+    removeMenu (menus, i) {
+      menus.splice(i, 1)
       this.save()
     },
 
