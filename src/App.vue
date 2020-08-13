@@ -15,9 +15,9 @@
       <site-menu :menus="site.menu"></site-menu>
     </v-navigation-drawer>
 
-    <v-content>
+    <v-main>
       <router-view/>
-    </v-content>
+    </v-main>
 
     <site-footer :footer="site.footer"></site-footer>
     <snackbar></snackbar>

@@ -7,7 +7,6 @@ import store from '../store/'
 
 firebase.initializeApp(firebaseConfig)
 firebase.auth().onAuthStateChanged((user) => {
-  console.log(user)
   return store.commit('setFireBaseUser', user)
 })
 
