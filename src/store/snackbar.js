@@ -6,7 +6,7 @@ const snackbar = {
   },
 
   mutations: {
-    showMessage: (state, payload) => {
+    showMessage (state, payload) {
       state.content = payload.content
       state.color = payload.color
     }

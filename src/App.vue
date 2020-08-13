@@ -8,9 +8,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <site-title :title="site.title"></site-title>
       <v-spacer/>
-      <v-btn icon @click="showSnackbar"><v-icon>mdi-check</v-icon></v-btn>
-      <v-btn icon @click="read"><v-icon>mdi-numeric</v-icon></v-btn>
-      <v-btn icon @click="readOne"><v-icon>mdi-account-badge-alert</v-icon></v-btn>
+      <site-sign></site-sign>
     </v-app-bar>
 
     <v-navigation-drawer app v-model="drawer" width="400">
@@ -30,6 +28,7 @@
 import SiteTitle from '@/views/site/title'
 import SiteFooter from '@/views/site/footer'
 import SiteMenu from '@/views/site/menu'
+import SiteSign from '@/views/site/sign'
 import Snackbar from './components/Snackbar.vue'
 
 export default {
@@ -38,6 +37,7 @@ export default {
     SiteTitle,
     SiteFooter,
     SiteMenu,
+    SiteSign,
     Snackbar
   },
   data () {
@@ -85,12 +85,13 @@ export default {
     subscribe () {
       this.$firebase.database().ref().child('site').on('value', (sn) => {
         const v = sn.val()
-        console.log(v)
+
         if (!v) {
           console.log('set')
           this.$firebase.database().ref().child('site').set(this.site)
           return
         }
+
         this.site = v
       }, (e) => {
         console.log(e.message)
