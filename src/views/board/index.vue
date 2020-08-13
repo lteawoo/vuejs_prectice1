@@ -1,9 +1,18 @@
 <template>
   <v-card>
     <v-card-title>board test</v-card-title>
+    <v-data-table
+      :headers="headers"
+      :items="items"
+    >
+      <template v-slot:[`item.id`]={item}>
+        <v-btn icon @click="openDialog(item)"><v-icon>mdi-pencil</v-icon></v-btn>
+        <v-btn icon @click="remove(item)"><v-icon>mdi-delete</v-icon></v-btn>
+      </template>
+    </v-data-table>
     <v-card-actions>
-      <v-btn @click="openDialog"><v-icon left>mdi-pencil</v-icon></v-btn>
       <v-btn @click="read"><v-icon left>mdi-read</v-icon></v-btn>
+      <v-btn @click="openDialog()"><v-icon left>mdi-pencil</v-icon></v-btn>
     </v-card-actions>
     <v-dialog v-model="dialog" max-width="500">
       <v-card>
@@ -15,7 +24,8 @@
           <v-card-actions>
             <v-spacer/>
 
-            <v-btn @click="save">save</v-btn>
+            <v-btn @click="update" v-if="selectedItem">update</v-btn>
+            <v-btn @click="add" v-else>write</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -27,22 +37,47 @@
 export default {
   data () {
     return {
+      headers: [
+        { value: 'title', text: '제목' },
+        { value: 'content', text: '내용' },
+        { value: 'id', text: 'id' }
+      ],
       items: [],
       form: {
         title: '',
         content: ''
       },
-      dialog: false
+      dialog: false,
+      selectedItem: null
     }
   },
 
+  created () {
+    this.read()
+  },
+
   methods: {
-    openDialog () {
+    openDialog (item) {
+      this.selectedItem = item
+
+      if (!item) {
+        this.form.title = ''
+        this.form.content = ''
+      } else {
+        this.form.title = item.title
+        this.form.content = item.content
+      }
+
       this.dialog = true
     },
 
-    save () {
+    add () {
       this.$firebase.firestore().collection('boards').add(this.form)
+      this.dialog = false
+    },
+
+    update () {
+      this.$firebase.firestore().collection('boards').doc(this.selectedItem.id).update(this.form)
       this.dialog = false
     },
 
@@ -60,6 +95,10 @@ export default {
         }
       })
       console.log(this.item)
+    },
+
+    remove (item) {
+      this.$firebase.firestore().collection('boards').doc(item.id).delete()
     }
   }
 }
