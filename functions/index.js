@@ -39,7 +39,7 @@ exports.increamentBoardCount = functions.firestore.document('boards/{boardId}')
       await firestore.collection('meta')
         .doc('boards')
         .update({
-          count: firestore.FieldValue.increment(1)
+          count: admin.firestore.FieldValue.increment(1)
         })
     } catch (e) {
       await firestore.collection('meta')
@@ -53,6 +53,6 @@ exports.decrementBoardCount = functions.firestore.document('boards/{boardId}')
     await firestore.collection('meta')
       .doc('boards')
       .update({
-        count: firestore.FieldValue.increment(-1)
+        count: admin.firestore.FieldValue.increment(-1)
       })
   })
