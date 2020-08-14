@@ -5,6 +5,8 @@
       :headers="headers"
       :items="items"
       :items-per-page="5"
+      :options.sync="options"
+      :server-items-length="serverItemsLength"
     >
       <template v-slot:[`item.id`]={item}>
         <v-btn icon @click="openDialog(item)"><v-icon>mdi-pencil</v-icon></v-btn>
@@ -50,34 +52,62 @@ export default {
       },
       dialog: false,
       selectedItem: null,
-      unsubscribe: null
+      unsubscribe: null,
+      unsubscribeCount: null,
+      serverItemsLength: 0,
+      options: { }
     }
   },
 
-  created () {
-    this.subscribe()
-  },
   destroyed () {
     if (this.unsubscribe) {
       this.unsubscribe()
+    }
+
+    if (this.unsubscribeCount) {
+      this.unsubscribeCount()
+    }
+  },
+
+  watch: {
+    options: {
+      handler (n, o) {
+        console.log(n)
+        console.log(o)
+
+        this.subscribe()
+      },
+      deep: true
     }
   },
 
   methods: {
     subscribe () {
-      this.unsubscribe = this.$firebase.firestore().collection('boards').onSnapshot((sn) => {
-        if (sn.empty) {
-          this.items = []
-          return
-        }
-        console.log('here')
-        this.items = sn.docs.map(v => {
-          const item = v.data()
-          return {
-            id: v.id, title: item.title, content: item.content
-          }
+      this.unsubscribeCount = this.$firebase.firestore()
+        .collection('meta')
+        .doc('boards')
+        .onSnapshot((doc) => {
+          if (!doc.exists) return
+
+          this.serverItemsLength = doc.data().count
         })
-      })
+
+      this.unsubscribe = this.$firebase.firestore()
+        .collection('boards')
+        .limit(this.options.itemsPerPage)
+        .onSnapshot((sn) => {
+          if (sn.empty) {
+            this.items = []
+            return
+          }
+
+          this.items = sn.docs.map(v => {
+            const item = v.data()
+            return {
+              id: v.id, title: item.title, content: item.content
+            }
+          })
+        })
     },
 
     openDialog (item) {
