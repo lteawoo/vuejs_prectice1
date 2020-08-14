@@ -49,7 +49,7 @@ exports.increamentBoardCount = functions.firestore.document('boards/{boardId}')
   })
 
 exports.decrementBoardCount = functions.firestore.document('boards/{boardId}')
-  .onCreate(async (snap, context) => {
+  .onDelete(async (snap, context) => {
     await firestore.collection('meta')
       .doc('boards')
       .update({
