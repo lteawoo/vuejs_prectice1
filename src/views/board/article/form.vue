@@ -8,7 +8,7 @@
 
         <v-btn icon @click="read"><v-icon>mdi-allergy</v-icon></v-btn>
         <v-btn icon @click="back"><v-icon>mdi-arrow-left</v-icon></v-btn>
-        <v-btn icon @click="save"><v-icon>mdi-content-save</v-icon></v-btn>
+        <v-btn icon @click="write"><v-icon>mdi-content-save</v-icon></v-btn>
       </v-toolbar>
       <v-card-text>
         <v-text-field v-model="form.title" outlined label="제목"></v-text-field>
@@ -62,62 +62,38 @@ export default {
       }
     },
 
-    back () {
-      this.$router.go(-1)
-    },
-
-    async save () {
+    async write () {
       this.loading = true
 
       try {
         const now = new Date()
-        const id = await this.getNextId()
-        const md = this.$refs.editor.invoke('getMarkdown')
-        const sn = await this.$firebase.storage()
-          .ref()
-          .child('boards')
-          .child(this.document)
-          .child(id + '.md').putString(md)
-        const contentUrl = await sn.ref.getDownloadURL()
         const doc = {
           title: this.form.title,
           updateAt: now,
-          contentUrl: contentUrl
+          content: this.$refs.editor.invoke('getMarkdown')
         }
-        console.log(contentUrl)
+        await this.$firebase.firestore()
+          .runTransaction(t => {
+            return t.get(this.ref)
+              .then(board => {
+                if (board.exists) {
+                  const articleCount = board.data().articleCount + 1
 
-        const batch = await this.$firebase.firestore().batch()
+                  t.update(this.ref, {
+                    articleCount: articleCount
+                  })
 
-        if (!this.articleId) {
-          doc.createdAt = now
-          doc.commentCount = 0
-          batch.set(this.ref.collection('articles').doc(id), doc)
-          batch.update(this.ref, { count: this.$firebase.firestore().FieldValue.increment(1) })
-        } else {
-          batch.update(this.ref.collection('articles').doc(this.articleId), doc)
-        }
-
-        await batch.commit()
+                  t.set(this.ref.collection('articles').doc(String(articleCount)), doc)
+                }
+              })
+          })
       } finally {
         this.loading = false
       }
     },
 
-    async getNextId () {
-      const articles = await this.$firebase.firestore()
-        .collection('boards')
-        .doc(this.document)
-        .collection('articles')
-        .get()
-
-      const articleArr = []
-      articles.forEach(article => {
-        if (article.exists) {
-          articleArr.push(article.id)
-        }
-      })
-
-      return Math.max(...articleArr)
+    back () {
+      this.$router.go(-1)
     }
   }
 }
