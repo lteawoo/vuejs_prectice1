@@ -9,6 +9,9 @@
         <v-btn icon @click="write">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
+        <v-btn icon @click="writeArticle">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </v-toolbar>
       <v-card-text v-if="info.createdAt">
         <v-alert color="info" outlined dismissible>
@@ -74,7 +77,16 @@ export default {
     },
 
     async write () {
-      this.$router.push(this.$route.path + '/write')
+      this.$router.push(this.$route.path + '/board-write')
+    },
+
+    async writeArticle () {
+      this.$router.push({
+        path: this.$route.path + '/article-write',
+        query: {
+          id: ''
+        }
+      })
     }
   }
 }
