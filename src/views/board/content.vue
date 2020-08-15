@@ -20,15 +20,16 @@
           <div class="text-right font-italic caption">수정일: {{info.updatedAt.toDate().toLocaleString()}}</div>
         </v-alert>
       </v-card-text>
-      <v-card-text>
-        articles
-      </v-card-text>
+      <board-article :articleCount="info.articleCount" :document="document"></board-article>
     </v-card>
   </v-container>
 </template>
 
 <script>
+import BoardArticle from './article/index'
+
 export default {
+  components: { BoardArticle },
   props: ['document'],
 
   data () {
@@ -36,6 +37,7 @@ export default {
       unsubscribe: null,
 
       info: {
+        articleCount: 0,
         category: '',
         name: '',
         description: '',
@@ -63,7 +65,6 @@ export default {
 
   methods: {
     subscribe () {
-      console.log(this.document)
       if (this.unsubscribe) this.unsubscribe()
 
       const ref = this.$firebase.firestore().collection('boards').doc(this.document)

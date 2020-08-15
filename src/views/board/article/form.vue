@@ -67,31 +67,35 @@ export default {
       this.loading = true
 
       try {
-        const now = new Date()
-
-        const doc = {
-          title: this.form.title,
-          updateAt: now,
-          content: this.$refs.editor.invoke('getMarkdown')
-        }
-
         await this.$firebase.firestore()
           .runTransaction(t => {
             return t.get(this.ref)
-              .then(board => {
-                if (board.exists) {
-                  const articleCount = board.data().articleCount + 1
-                  doc.createAt = now
-
-                  t.update(this.ref, {
-                    articleCount: articleCount
-                  })
-                  t.set(this.ref.collection('articles').doc(String(articleCount)), doc)
+              .then(async board => {
+                const now = new Date()
+                const doc = {
+                  title: this.form.title,
+                  createdAt: now,
+                  updatedAt: now,
+                  content: this.$refs.editor.invoke('getMarkdown')
                 }
+
+                const articles = await this.ref.collection('articles').get()
+                const docs = articles.docs
+                const nextId = Math.max(...docs.map(article => {
+                  return article.id
+                }))
+
+                t.set(this.ref.collection('articles').doc(String(nextId + 1)), doc)
+
+                t.update(this.ref, {
+                  articleCount: docs.length + 1
+                })
               })
           })
       } finally {
         this.loading = false
+
+        this.back()
       }
     },
 
@@ -101,18 +105,20 @@ export default {
 
         const doc = {
           title: this.form.title,
-          updateAt: now,
+          updatedAt: now,
           content: this.$refs.editor.invoke('getMarkdown')
         }
 
         this.$firebase.firestore.update(this.ref.collection('articles').doc(this.articleId), doc)
       } finally {
         this.loading = false
+
+        this.back()
       }
     },
 
     back () {
-      this.$router.go(-1)
+      this.$router.replace('/board/' + this.document)
     }
   }
 }

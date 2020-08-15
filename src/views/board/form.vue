@@ -66,10 +66,6 @@ export default {
       })
     },
 
-    back () {
-      this.$router.go(-1)
-    },
-
     async save () {
       this.loading = true
 
@@ -90,10 +86,14 @@ export default {
           this.ref.update(form)
         }
 
-        this.$router.push('/board/' + this.document)
+        this.back()
       } finally {
         this.loading = false
       }
+    },
+
+    back () {
+      this.$router.replace('/board/' + this.document)
     }
   }
 }
