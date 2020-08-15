@@ -12,6 +12,7 @@
         showCurrentPage: true,
         itemsPerPageOptions: [itemsPerPage]
       }"
+      must-sort
     >
     </v-data-table>
   </div>
@@ -53,7 +54,10 @@ export default {
 
     options: {
       handler (n, o) {
-        if (!o.page) {
+        if (!o.page ||
+             head(o.sortBy) !== head(n.sortBy) ||
+             head(o.sortDesc) !== head(n.sortDesc)) {
+          n.page = 1
           this.subscribe(0)
           return
         }
@@ -67,9 +71,10 @@ export default {
 
   methods: {
     async subscribe (arrow) {
+      if (this.unsubscribe) this.unsubscribe()
+
       this.loading = true
 
-      // const { sortBy, sortDesc, page, itemsPerPage } = this.options
       const order = head(this.options.sortBy)
       const sort = head(this.options.sortDesc) ? 'desc' : 'asc'
 
