@@ -29,8 +29,11 @@ export default {
       loading: false,
 
       headers: [
-        { value: 'createdAt', text: '작성일', width: '20%' },
-        { value: 'title', text: '제목', width: '80%' }
+        { value: 'createdAt', text: '작성일', width: '10%' },
+        { value: 'title', text: '제목', width: '50%' },
+        { value: 'userName', text: '작성자', width: '20%' },
+        { value: 'readCount', text: '조회수', width: '10%' },
+        { value: 'commentCount', text: '댓글', width: '10%' }
       ],
       options: {
         sortBy: ['createdAt'],
@@ -107,11 +110,18 @@ export default {
 
         this.docs = sn.docs
         this.items = sn.docs.map(doc => {
-          const item = doc.data()
-          item.id = doc.id
-          item.createdAt = item.createdAt.toDate()
-          item.updatedAt = item.updatedAt.toDate()
-          return item
+          const docData = doc.data()
+
+          return {
+            id: docData.id,
+            title: docData.title,
+            content: docData.content,
+            readCount: docData.readCount,
+            commentCount: docData.commentCount,
+            updatedAt: docData.updatedAt.toDate(),
+            createdAt: docData.createdAt.toDate(),
+            userName: docData.user.displayName
+          }
         })
       })
 

@@ -80,6 +80,14 @@ export default {
                   title: this.form.title,
                   createdAt: now,
                   updatedAt: now,
+                  commentCount: 0,
+                  readCount: 0,
+                  user: {
+                    uid: this.$store.state.fireBaseUser.uid,
+                    email: this.user.email,
+                    photoURL: this.user.photoURL,
+                    displayName: this.user.displayName
+                  },
                   content: this.$refs.editor.invoke('getMarkdown')
                 }
 
