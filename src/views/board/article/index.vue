@@ -37,11 +37,11 @@ export default {
       loading: false,
 
       headers: [
-        { value: 'createdAt', text: '작성일', width: '10%' },
-        { value: 'title', text: '제목', width: '50%' },
-        { value: 'userName', text: '작성자', width: '20%' },
-        { value: 'readCount', text: '조회수', width: '10%' },
-        { value: 'commentCount', text: '댓글', width: '10%' }
+        { value: 'createdAt', text: '작성일', width: '110px', align: 'center' },
+        { value: 'title', text: '제목', width: '100%' },
+        { value: 'userName', text: '작성자', width: '150px' },
+        { value: 'readCount', text: '조회수', width: '70px' },
+        { value: 'commentCount', text: '댓글', width: '70px' }
       ],
       options: {
         sortBy: ['createdAt'],

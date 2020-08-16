@@ -13,7 +13,19 @@ export default {
 
   computed: {
     displayTime () {
-      return this.$moment(this.time).fromNow()
+      const bt = this.$moment(this.time)
+      const now = this.$moment()
+      const diff = now.diff(bt, 'hour')
+
+      const time = bt.toDate()
+
+      if (diff < 1) {
+        return bt.fromNow()
+      } else if (diff < 24) {
+        return this.$dateFormat(time, 'HH:MM')
+      }
+
+      return this.$dateFormat(time, 'yyyy.mm.dd')
     }
   }
 }

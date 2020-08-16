@@ -54,6 +54,7 @@ export default {
         .doc(this.document)
 
       if (!this.articleId) return
+
       const article = await this.ref
         .collection('articles')
         .doc(this.articleId)
@@ -93,7 +94,7 @@ export default {
 
                 const articles = await this.ref.collection('articles').get()
                 const docs = articles.docs
-                const nextId = Math.max(...docs.map(article => {
+                const nextId = articles.empty ? 0 : Math.max(...docs.map(article => {
                   return article.id
                 }))
 
