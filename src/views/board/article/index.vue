@@ -13,6 +13,9 @@
         itemsPerPageOptions: [itemsPerPage]
       }"
       must-sort
+      item-key="id"
+      :sort-desc="true"
+      :mobile-breakpoint= "0"
     >
       <template v-slot:[`item.createdAt`]="{ item }">
         <display-time :time="item.createdAt"></display-time>
@@ -38,10 +41,11 @@ export default {
 
       headers: [
         { value: 'createdAt', text: '작성일', width: '110px', align: 'center' },
-        { value: 'title', text: '제목', width: '100%' },
-        { value: 'userName', text: '작성자', width: '150px' },
+        { value: 'title', text: '제목', width: '100%', sortable: false },
+        { value: 'userName', text: '작성자', width: '100px', sortable: false },
         { value: 'readCount', text: '조회수', width: '70px' },
-        { value: 'commentCount', text: '댓글', width: '70px' }
+        { value: 'commentCount', text: '댓글', width: '70px', sortable: false },
+        { value: 'id', text: '아디', width: '100px', sortable: false }
       ],
       options: {
         sortBy: ['createdAt'],
@@ -60,6 +64,7 @@ export default {
 
   watch: {
     document () {
+      console.log('qqq')
       this.subscribe()
     },
 
@@ -81,7 +86,7 @@ export default {
   },
 
   methods: {
-    async subscribe (arrow) {
+    subscribe (arrow) {
       if (this.unsubscribe) this.unsubscribe()
 
       this.loading = true
@@ -119,9 +124,9 @@ export default {
         this.docs = sn.docs
         this.items = sn.docs.map(doc => {
           const docData = doc.data()
-
+          console.log(docData)
           return {
-            id: docData.id,
+            id: doc.id,
             title: docData.title,
             content: docData.content,
             readCount: docData.readCount,
