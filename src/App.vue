@@ -87,7 +87,6 @@ export default {
         const v = sn.val()
 
         if (!v) {
-          console.log('set')
           this.$firebase.database().ref().child('site').set(this.site)
           return
         }
@@ -103,26 +102,6 @@ export default {
         content: 'Hello, snackbar',
         color: 'info'
       }, this.$store)
-    },
-
-    save () {
-      console.log('save@@@')
-      this.$firebase.database().ref().child('abcd').set({
-        title: 'abcd', text: 'tttttaat'
-      })
-    },
-
-    read () {
-      console.log('read!!!!')
-      this.$firebase.database().ref().child('abcd').on('value', (sn) => {
-        console.log(sn)
-        console.log(sn.val())
-      })
-    },
-
-    async readOne () {
-      const sn = await this.$firebase.database().ref().child('abcd').once('value')
-      console.log(sn.val())
     }
   }
 }

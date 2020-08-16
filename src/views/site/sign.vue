@@ -45,9 +45,10 @@ export default {
 
   methods: {
     async signInWithGoogle () {
+      this.loading = true
+
       const provider = new this.$firebase.auth.GoogleAuthProvider()
       this.$firebase.auth().languageCode = 'ko'
-      this.loading = true
 
       try {
         const sn = await this.$firebase.auth().signInWithPopup(provider)

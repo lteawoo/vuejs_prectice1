@@ -16,13 +16,16 @@ exports.createUser = functions.auth
   .user()
   .onCreate(async (user) => {
     const { uid, email, displayName, photoURL } = user
+    const now = new Date()
     const data = {
       email,
       displayName,
       photoURL,
-      createdAt: new Date().getMilliseconds(),
+      createdAt: now.getMilliseconds(),
       level: email === functions.config().admin.email ? 0 : 5
     }
+    await firestore.collection('users').doc(uid).set(data)
+    data.createdAt = now.getTime()
     db.ref('users').child(uid).set(data)
   })
 
@@ -30,7 +33,8 @@ exports.deleteUser = functions.auth
   .user()
   .onDelete(async (user) => {
     const { uid } = user
-    db.ref('users').child(uid).remove()
+    await db.ref('users').child(uid).remove()
+    await firestore.collection('users').doc(uid).delete()
   })
 
 exports.increamentBoardCount = functions.firestore.document('boards/{boardId}')

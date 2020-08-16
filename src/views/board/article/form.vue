@@ -6,8 +6,8 @@
 
         <v-spacer/>
         <v-btn icon @click="back"><v-icon>mdi-arrow-left</v-icon></v-btn>
-        <v-btn icon @click="write" v-if="!articleId"><v-icon>mdi-content-save</v-icon></v-btn>
-        <v-btn icon @click="update" v-else><v-icon>mdi-file-document-edit</v-icon></v-btn>
+        <v-btn icon @click="write" v-if="!articleId" :hidden="!user" :disabled="!user"><v-icon>mdi-content-save</v-icon></v-btn>
+        <v-btn icon @click="update" v-else :hidden="!user" :disabled="!user"><v-icon>mdi-file-document-edit</v-icon></v-btn>
       </v-toolbar>
       <v-card-text>
         <v-text-field v-model="form.title" outlined label="제목"></v-text-field>
@@ -36,6 +36,10 @@ export default {
   computed: {
     articleId () {
       return this.$route.query.id
+    },
+
+    user () {
+      return this.$store.state.user
     }
   },
 

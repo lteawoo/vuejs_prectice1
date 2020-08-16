@@ -7,11 +7,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     editable: true,
-    fireBaseUser: null
+    fireBaseUser: null,
+    user: null
   },
   mutations: {
     setFireBaseUser (state, fireBaseUser) {
       state.fireBaseUser = fireBaseUser
+    },
+
+    setUser (state, user) {
+      state.user = user
     }
   },
   actions: {
