@@ -1,13 +1,15 @@
 <template>
-  <v-container fluid>
+  <v-container fluid v-if="user">
     <v-card :loading="loading">
       <v-toolbar color="accent" dense flat dark>
         <v-toolbar-title>게시판 글 작성</v-toolbar-title>
 
         <v-spacer/>
         <v-btn icon @click="back"><v-icon>mdi-arrow-left</v-icon></v-btn>
-        <v-btn icon @click="write" v-if="!articleId" :hidden="!user" :disabled="!user"><v-icon>mdi-content-save</v-icon></v-btn>
-        <v-btn icon @click="update" v-else :hidden="!user" :disabled="!user"><v-icon>mdi-file-document-edit</v-icon></v-btn>
+        <template v-if="user">
+          <v-btn icon @click="write" v-if="!articleId" :hidden="!user" :disabled="!user"><v-icon>mdi-content-save</v-icon></v-btn>
+          <v-btn icon @click="update" v-else-if="user.id === this.form.uid"><v-icon>mdi-file-document-edit</v-icon></v-btn>
+        </template>
       </v-toolbar>
       <v-card-text>
         <v-text-field v-model="form.title" outlined label="제목"></v-text-field>
@@ -25,12 +27,19 @@ export default {
     return {
       form: {
         title: '',
-        content: ''
+        content: '',
+        uid: '',
+        writer: ''
       },
       loading: false,
       exists: false,
       ref: null
     }
+  },
+
+  mounted () {
+    console.log(this.user.id)
+    console.log(this.form.uid)
   },
 
   computed: {
@@ -64,6 +73,8 @@ export default {
         const data = article.data()
         this.form.title = data.title
         this.form.content = data.content
+        this.form.uid = data.user.uid
+        this.form.writer = data.user.displayName
         this.$refs.editor.invoke('setMarkdown', data.content)
       }
     },

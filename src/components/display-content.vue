@@ -5,7 +5,9 @@
         {{ item.title }}
       </v-toolbar-title>
       <v-spacer/>
-      <v-btn @click="writeArticle" icon><v-icon>mdi-pencil</v-icon></v-btn>
+      <template v-if="user && user.id === item.user.uid">
+        <v-btn @click="writeArticle" icon><v-icon>mdi-pencil</v-icon></v-btn>
+      </template>
       <v-btn @click="$emit('close')" icon><v-icon>mdi-close</v-icon></v-btn>
     </v-toolbar>
 
@@ -40,7 +42,7 @@ export default {
     DisplayTime
   },
 
-  props: ['item'],
+  props: ['document', 'item'],
 
   data () {
     return {
@@ -48,8 +50,17 @@ export default {
     }
   },
 
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
+  },
+
   mounted () {
     console.log('mounted')
+    console.log(this.user)
+    console.log(this.item.user)
+    this.increaseReadCount()
   },
 
   methods: {
@@ -60,6 +71,17 @@ export default {
           id: this.item.id
         }
       })
+    },
+
+    async increaseReadCount () {
+      await this.$firebase.firestore()
+        .collection('boards')
+        .doc(this.document)
+        .collection('articles')
+        .doc(this.item.id)
+        .update({
+          readCount: this.$firebase.firestore.FieldValue.increment(1)
+        })
     }
   }
 }

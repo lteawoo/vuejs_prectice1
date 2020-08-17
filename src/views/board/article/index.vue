@@ -27,7 +27,7 @@
       </template>
     </v-data-table>
     <v-dialog v-if="selectedItem" v-model="dialog" fullscreen>
-      <display-content :item="selectedItem" @close="dialog=false"></display-content>
+      <display-content :document="document" :item="selectedItem" @close="dialog=false"></display-content>
     </v-dialog>
   </div>
 </template>
@@ -54,10 +54,9 @@ export default {
       headers: [
         { value: 'createdAt', text: '작성일', width: '110px', align: 'center' },
         { value: 'title', text: '제목', width: '100%', sortable: false },
-        { value: 'userName', text: '작성자', width: '100px', sortable: false },
-        { value: 'readCount', text: '조회수', width: '70px' },
-        { value: 'commentCount', text: '댓글', width: '70px', sortable: false },
-        { value: 'id', text: '아디', width: '100px', sortable: false }
+        { value: 'userName', text: '작성자', width: '150px', sortable: false },
+        { value: 'readCount', text: '조회수', width: '90px', align: 'center' },
+        { value: 'commentCount', text: '댓글', width: '70px', sortable: false, align: 'center' }
       ],
       items: [],
 
@@ -77,14 +76,11 @@ export default {
 
   watch: {
     document () {
-      console.log('qqq')
       this.subscribe()
     },
 
     options: {
       handler (n, o) {
-        console.log(n)
-        console.log(o)
         if (!o.page ||
              head(o.sortBy) !== head(n.sortBy) ||
              head(o.sortDesc) !== head(n.sortDesc)) {
@@ -154,9 +150,8 @@ export default {
             user: docData.user
           }
         })
-        console.log(this.items)
       }, err => {
-        console.log(err)
+        console.error(err)
       })
 
       this.loading = false

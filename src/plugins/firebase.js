@@ -14,8 +14,11 @@ const subscribe = (user) => {
   const ref = firebase.firestore().collection('users').doc(user.uid)
 
   unsubscribe = ref.onSnapshot(doc => {
+    const userData = doc.data()
+    userData.id = doc.id
+
     if (doc.exists) {
-      store.commit('setUser', doc.data())
+      store.commit('setUser', userData)
     }
   }, console.error)
 }
