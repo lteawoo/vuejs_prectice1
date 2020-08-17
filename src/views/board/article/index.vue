@@ -19,10 +19,16 @@
       <template v-slot:[`item.createdAt`]="{ item }">
         <display-time :time="item.createdAt"></display-time>
       </template>
+      <template v-slot:[`item.title`]="{ item }">
+        <a @click="openDialog(item)">{{ item.title }}</a>
+      </template>
       <template v-slot:[`item.userName`]="{ item }">
         <display-user :user="item.user"></display-user>
       </template>
     </v-data-table>
+    <v-dialog v-if="selectedItem" v-model="dialog" fullscreen>
+      <display-content :item="selectedItem" @close="dialog=false"></display-content>
+    </v-dialog>
   </div>
 </template>
 
@@ -30,11 +36,13 @@
 import { head, last } from 'lodash'
 import DisplayTime from '@/components/display-time'
 import DisplayUser from '@/components/display-user'
+import DisplayContent from '@/components/display-content'
 
 export default {
   components: {
     DisplayTime,
-    DisplayUser
+    DisplayUser,
+    DisplayContent
   },
 
   props: ['articleCount', 'document'],
@@ -60,7 +68,10 @@ export default {
       },
 
       docs: [],
-      unsubscribe: null
+      unsubscribe: null,
+
+      dialog: false,
+      selectedItem: null
     }
   },
 
@@ -86,6 +97,12 @@ export default {
         this.subscribe(arrow)
       },
       deep: true
+    },
+
+    dialog (n) {
+      if (!n) {
+        this.selectedItem = null
+      }
     }
   },
 
@@ -143,6 +160,11 @@ export default {
       })
 
       this.loading = false
+    },
+
+    openDialog (item) {
+      this.selectedItem = item
+      this.dialog = true
     }
   },
 

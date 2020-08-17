@@ -122,7 +122,7 @@ export default {
           content: this.$refs.editor.invoke('getMarkdown')
         }
 
-        this.$firebase.firestore.update(this.ref.collection('articles').doc(this.articleId), doc)
+        await this.ref.collection('articles').doc(this.articleId).update(doc)
       } finally {
         this.loading = false
 
