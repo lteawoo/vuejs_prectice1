@@ -3,9 +3,8 @@
     <v-data-table
       :headers="headers"
       :items="items"
-      :page.sync="page"
-      @page-count="pageCount = $event"
-      :server-items-length="serverItemsLength"
+
+      :server-items-length="articleCount"
       :options.sync="options"
       :loading="loading"
       :footer-props="{
@@ -20,6 +19,9 @@
       <template v-slot:[`item.createdAt`]="{ item }">
         <display-time :time="item.createdAt"></display-time>
       </template>
+      <template v-slot:[`item.userName`]="{ item }">
+        <display-user :user="item.user"></display-user>
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -27,10 +29,12 @@
 <script>
 import { head, last } from 'lodash'
 import DisplayTime from '@/components/display-time'
+import DisplayUser from '@/components/display-user'
 
 export default {
   components: {
-    DisplayTime
+    DisplayTime,
+    DisplayUser
   },
 
   props: ['articleCount', 'document'],
@@ -47,17 +51,15 @@ export default {
         { value: 'commentCount', text: '댓글', width: '70px', sortable: false },
         { value: 'id', text: '아디', width: '100px', sortable: false }
       ],
+      items: [],
+
+      itemsPerPage: 5,
       options: {
         sortBy: ['createdAt'],
         sortDesc: [true]
       },
-      page: 1,
-      pageCount: 0,
-      serverItemsLength: 0,
-      items: [],
-      docs: [],
-      itemsPerPage: 5,
 
+      docs: [],
       unsubscribe: null
     }
   },
@@ -70,6 +72,8 @@ export default {
 
     options: {
       handler (n, o) {
+        console.log(n)
+        console.log(o)
         if (!o.page ||
              head(o.sortBy) !== head(n.sortBy) ||
              head(o.sortDesc) !== head(n.sortDesc)) {
@@ -99,8 +103,6 @@ export default {
         .doc(this.document)
         .collection('articles')
 
-      this.serverItemsLength = this.articleCount
-
       let query = ref
 
       if (order) {
@@ -124,7 +126,6 @@ export default {
         this.docs = sn.docs
         this.items = sn.docs.map(doc => {
           const docData = doc.data()
-          console.log(docData)
           return {
             id: doc.id,
             title: docData.title,
@@ -133,9 +134,12 @@ export default {
             commentCount: docData.commentCount,
             updatedAt: docData.updatedAt.toDate(),
             createdAt: docData.createdAt.toDate(),
-            userName: docData.user.displayName
+            user: docData.user
           }
         })
+        console.log(this.items)
+      }, err => {
+        console.log(err)
       })
 
       this.loading = false
