@@ -13,7 +13,12 @@
       </v-toolbar>
       <v-card-text>
         <v-text-field v-model="form.title" outlined label="제목"></v-text-field>
-        <editor ref="editor"></editor>
+        <editor
+          ref="editor"
+          initialEditType="wysiwyg"
+          :options="{
+            hideModeSwitch: true
+          }"></editor>
       </v-card-text>
     </v-card>
   </v-container>
