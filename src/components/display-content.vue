@@ -7,8 +7,9 @@
       <v-spacer/>
       <template v-if="user && user.id === item.user.uid">
         <v-btn @click="writeArticle" icon><v-icon>mdi-pencil</v-icon></v-btn>
+        <v-btn @click="deleteArticle" icon><v-icon>mdi-trash-can</v-icon></v-btn>
       </template>
-      <v-btn @click="$emit('close')" icon><v-icon>mdi-close</v-icon></v-btn>
+      <v-btn @click="close" icon><v-icon>mdi-close</v-icon></v-btn>
     </v-toolbar>
 
     <v-card-text>
@@ -46,6 +47,7 @@ export default {
 
   data () {
     return {
+      ref: this.$firebase.firestore().collection('boards').doc(this.document),
       content: ''
     }
   },
@@ -57,13 +59,14 @@ export default {
   },
 
   mounted () {
-    console.log('mounted')
-    console.log(this.user)
-    console.log(this.item.user)
     this.increaseReadCount()
   },
 
   methods: {
+    close () {
+      this.$emit('close')
+    },
+
     async writeArticle () {
       this.$router.push({
         path: this.$route.path + '/article-write',
@@ -73,10 +76,22 @@ export default {
       })
     },
 
+    async deleteArticle () {
+      const batch = this.$firebase.firestore().batch()
+
+      batch.update(this.ref, {
+        articleCount: this.$firebase.firestore.FieldValue.increment(-1)
+      })
+      batch.delete(this.ref
+        .collection('articles')
+        .doc(this.item.id))
+      await batch.commit()
+
+      this.close()
+    },
+
     async increaseReadCount () {
-      await this.$firebase.firestore()
-        .collection('boards')
-        .doc(this.document)
+      await this.ref
         .collection('articles')
         .doc(this.item.id)
         .update({
