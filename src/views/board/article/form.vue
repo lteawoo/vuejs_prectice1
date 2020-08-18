@@ -89,38 +89,34 @@ export default {
 
       try {
         await this.$firebase.firestore()
-          .runTransaction(t => {
-            return t.get(this.ref)
-              .then(async board => {
-                const now = new Date()
-                const doc = {
-                  title: this.form.title,
-                  createdAt: now,
-                  updatedAt: now,
-                  commentCount: 0,
-                  readCount: 0,
-                  user: {
-                    uid: this.$store.state.fireBaseUser.uid,
-                    email: this.user.email,
-                    photoURL: this.user.photoURL,
-                    displayName: this.user.displayName
-                  },
-                  content: this.$refs.editor.invoke('getMarkdown')
-                }
+          .runTransaction(t => t.get(this.ref)
+            .then(async board => {
+              const now = new Date()
+              const doc = {
+                title: this.form.title,
+                createdAt: now,
+                updatedAt: now,
+                commentCount: 0,
+                readCount: 0,
+                user: {
+                  uid: this.$store.state.fireBaseUser.uid,
+                  email: this.user.email,
+                  photoURL: this.user.photoURL,
+                  displayName: this.user.displayName
+                },
+                content: this.$refs.editor.invoke('getMarkdown')
+              }
 
-                const articles = await this.ref.collection('articles').get()
-                const docs = articles.docs
-                const nextId = articles.empty ? 0 : Math.max(...docs.map(article => {
-                  return article.id
-                }))
+              const articles = await this.ref.collection('articles').get()
+              const docs = articles.docs
+              const nextId = articles.empty ? 0 : Math.max(...docs.map(article => article.id))
 
-                t.set(this.ref.collection('articles').doc(String(nextId + 1)), doc)
+              t.set(this.ref.collection('articles').doc(String(nextId + 1)), doc)
 
-                t.update(this.ref, {
-                  articleCount: docs.length + 1
-                })
+              t.update(this.ref, {
+                articleCount: docs.length + 1
               })
-          })
+            }))
       } finally {
         this.loading = false
 
