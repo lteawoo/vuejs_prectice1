@@ -1,16 +1,16 @@
 <template>
   <v-card>
     <v-card-title>
-      <v-text-field v-model="comment" outlined label="댓글 작성" @keypress.enter="save" hide-details></v-text-field>
+      <v-textarea v-model="comment" rows="3" outlined label="댓글 작성" append-icon="mdi-send" @click:append="save"  hide-details></v-textarea>
     </v-card-title>
     <template v-for="(item, i) in items">
-      <v-list-item :key="item.id">
+      <v-list-item :key="'comment' + item.id">
         <v-list-item-action>
           <display-user :user="item.user"></display-user>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-subtitle v-text="item.comment"></v-list-item-subtitle>
-          <v-list-item-subtitle>
+          <v-list-item-subtitle class="black--text comment" v-text="item.comment"></v-list-item-subtitle>
+          <v-list-item-subtitle class="font-italic">
             <display-time :time="item.createdAt"></display-time>
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -18,14 +18,25 @@
       <v-divider :key="i"></v-divider>
     </template>
     <v-list-item>
-      <v-btn @click="more" text color="primary" block>더보기</v-btn>
+      <v-btn
+        v-if="lastDoc && items.length < article.commentCount"
+        @click="more"
+        text
+        color="primary"
+        block
+        v-intersect="onInstersect"
+      >
+        더보기
+      </v-btn>
     </v-list-item>
   </v-card>
 </template>
 
 <script>
+import { last } from 'lodash'
 import DisplayTime from '@/components/display-time'
 import DisplayUser from '@/components/display-user'
+const LIMIT = 5
 
 export default {
   components: {
@@ -33,14 +44,14 @@ export default {
     DisplayUser
   },
 
-  props: ['docRef'],
+  props: ['docRef', 'article'],
 
   data () {
     return {
       comment: '',
       items: [],
       unsubscribe: null,
-      limit: 5
+      lastDoc: null
     }
   },
 
@@ -65,25 +76,55 @@ export default {
       if (this.unsubscribe) this.unsubscribe()
 
       this.unsubscribe = this.docRef.collection('comments')
-        .limit(this.limit)
         .orderBy('createdAt', 'desc')
+        .limit(LIMIT)
         .onSnapshot(sn => {
           if (sn.empty) {
             this.items = []
             return
           }
 
-          this.items = sn.docs.map(doc => {
-            const docData = doc.data()
-            return {
-              id: doc.id,
-              createdAt: docData.createdAt.toDate(),
-              updatedAt: docData.updatedAt.toDate(),
-              comment: docData.comment,
-              user: docData.user
-            }
-          })
+          this.snapshotToItems(sn)
         })
+    },
+
+    snapshotToItems (sn) {
+      this.lastDoc = last(sn.docs)
+
+      sn.docs.forEach(doc => {
+        const exists = this.items.some(item => doc.id === item.id)
+
+        if (!exists) {
+          const docData = doc.data()
+
+          this.items.push({
+            id: doc.id,
+            createdAt: docData.createdAt.toDate(),
+            updatedAt: docData.updatedAt.toDate(),
+            comment: docData.comment,
+            user: docData.user
+          })
+        }
+      })
+
+      this.items.sort((before, after) => {
+        const beforeId = before.id
+        const afterId = after.id
+
+        return afterId - beforeId
+      })
+    },
+
+    async more () {
+      if (!this.lastDoc) throw Error('더이상 데이터가 없습니다.')
+
+      const sn = await this.docRef.collection('comments')
+        .limit(LIMIT)
+        .orderBy('createdAt', 'desc')
+        .startAfter(this.lastDoc)
+        .get()
+
+      this.snapshotToItems(sn)
     },
 
     async save () {
@@ -120,10 +161,15 @@ export default {
       }
     },
 
-    more () {
-      this.limit += 5
-      this.subscribe()
+    onInstersect (entries, observer, isIntersecting) {
+      if (isIntersecting) this.more()
     }
   }
 }
 </script>
+
+<style scoped>
+  .comment {
+    white-space: pre-wrap;
+  }
+</style>
