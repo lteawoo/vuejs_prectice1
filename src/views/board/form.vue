@@ -45,6 +45,12 @@ export default {
     this.subscribe()
   },
 
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
+  },
+
   destroyed () {
     if (this.unsubscribe) this.unsubscribe()
   },
@@ -69,6 +75,8 @@ export default {
     async save () {
       this.loading = true
 
+      if (!this.$store.state.fireBaseUser) throw Error('로그인이 필요합니다')
+
       const form = {
         category: this.form.category,
         name: this.form.name,
@@ -80,10 +88,16 @@ export default {
         if (!this.exists) {
           form.createdAt = new Date()
           form.articleCount = 0
+          form.user = {
+            uid: this.$store.state.fireBaseUser.uid,
+            email: this.user.email,
+            photoURL: this.user.photoURL,
+            displayName: this.user.displayName
+          }
 
           await this.ref.set(form)
         } else {
-          this.ref.update(form)
+          await this.ref.update(form)
         }
 
         this.back()

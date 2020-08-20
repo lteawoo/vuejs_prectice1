@@ -42,11 +42,6 @@ export default {
     }
   },
 
-  mounted () {
-    console.log(this.user.id)
-    console.log(this.form.uid)
-  },
-
   computed: {
     articleId () {
       return this.$route.query.id
